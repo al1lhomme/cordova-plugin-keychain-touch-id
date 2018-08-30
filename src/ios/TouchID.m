@@ -29,8 +29,23 @@
     NSError *error = nil;
     BOOL touchIDAvailable = [self.laContext canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&error];
     if(touchIDAvailable){
-        CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
-        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+        
+	NSString *biometryType = @"";
+        if (@available(iOS 11.0, *)) {
+            if (self.laContext.biometryType == LABiometryTypeFaceID) {
+                biometryType = @"face";
+            }
+            else {
+                biometryType = @"touch";
+            }
+            CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:biometryType];
+            [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+        }
+        else {
+            CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString: @"touch"];
+            [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+        } 
+	    
     }
     else{
         if(error.code == -7){
