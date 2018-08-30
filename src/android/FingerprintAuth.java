@@ -203,7 +203,7 @@ public class FingerprintAuth extends CordovaPlugin {
             JSONObject resultJson = new JSONObject();
             if (isFingerprintAuthAvailable()) {
                 mPluginResult = new PluginResult(PluginResult.Status.OK);
-                mCallbackContext.success("YES");
+                mCallbackContext.success("touch");
                 mCallbackContext.sendPluginResult(mPluginResult);
             } else if (isFingerprintHardwareDetected()) {
                 mPluginResult = new PluginResult(PluginResult.Status.ERROR);
