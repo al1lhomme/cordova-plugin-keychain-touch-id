@@ -52,8 +52,11 @@
             CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: @"No FP available"];
             [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
         }
-        if(error.code == -6){
+        else if(error.code == -6){
             CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: @"No hardware available"];
+            [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+        } else {
+            CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString: @"Not available"];
             [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
         }
 
